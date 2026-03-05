@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EduCredChain | Blockchain Certificate Verification</title>
+
+<style>
+/* ================= GLOBAL ================= */
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden; /* 🔒 NO SCROLL */
+  font-family: "Segoe UI", sans-serif;
+  background:#f4f6f8;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  height:60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  background:#0a1a2f;
+  color:#fff;
+}
+.navbar a {
+  color:#fff;
+  margin-left:20px;
+  text-decoration:none;
+  cursor:pointer;
+}
+.logo {
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* ================= PAGE SYSTEM ================= */
+.page {
+  position:absolute;
+  top:60px;
+  left:0;
+  width:100vw;
+  height:calc(100vh - 60px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.4s ease;
+}
+
+.page.active {
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ================= HOME ================= */
+#home {
+  background:radial-gradient(circle at top,#123a63,#000);
+  color:white;
+}
+
+.blockchain-bg {
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:move 20s linear infinite;
+}
+
+@keyframes move {
+  to { background-position:400px 400px; }
+}
+
+.home-content {
+  position:relative;
+  text-align:center;
+  z-index:2;
+}
+
+.home-content h1 {
+  font-size:42px;
+}
+.home-content p {
+  opacity:0.9;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  padding:12px 26px;
+  background:#1a73e8;
+  color:white;
+  border:none;
+  border-radius:6px;
+  margin:10px;
+  cursor:pointer;
+}
+.btn.outline {
+  background:none;
+  border:1px solid white;
+}
+
+/* ================= BOX / FORMS ================= */
+.box {
+  background:white;
+  padding:30px;
+  width:360px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.box h2 {
+  text-align:center;
+}
+.box input, select {
+  width:100%;
+  height:48px;
+  margin:12px 0;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  box-sizing:border-box;
+  display:block;
+}
+
+.note {
+  font-size:13px;
+  color:gray;
+  margin-top:10px;
+}
+
+/* ================= VERIFY RESULT ================= */
+.result {
+  margin-top:15px;
+  background:#e8f5e9;
+  padding:10px;
+  border-radius:6px;
+  font-size:14px;
+  display:none;
+}
+
+/* ================= ABOUT ================= */
+.about {
+  background:white;
+  padding:40px;
+  width:60%;
+  border-radius:12px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:#0a1a2f;
+  color:white;
+  text-align:center;
+  padding:6px;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">EduCredChain</div>
+  <div>
+    <a onclick="showPage('home')">_</a>
+    <a onclick="showPage('login')">_</a>
+    <a onclick="showPage('issuer')">_</a>
+    <a onclick="showPage('verify')">_</a>
+    <a onclick="showPage('about')">_</a>
+  </div>
+</div>
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="blockchain-bg"></div>
+  <div class="home-content">
+    <h1>Educational Credential on Blockchain</h1>
+    <p>Tamper-Proof • Blockchain-Based</p>
+    <button class="btn" onclick="showPage('verify')">Verify Certificate</button>
+    <button class="btn outline" onclick="showPage('issuer')">Issue Certificate</button>
+  </div>
+  <footer>© 2026 EduCredChain | Digital India Prototype</footer>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="page">
+  <div class="box">
+    <h2>Secure Login</h2>
+    <select>
+      <option>User Login</option>
+      <option>University / Issuer</option>
+    </select>
+    <input placeholder="Email / University ID">
+    <input type="password" placeholder="Password">
+    <button class="btn">Login</button>
+    <div class="note">Gov / Google SSO Ready</div>
+  </div>
+</section>
+
+<!-- ISSUER -->
+<section id="issuer" class="page">
+  <div class="box">
+    <h2>Issue Certificate</h2>
+    <input id="studentName" placeholder="Student Name">
+    <input id="course" placeholder="Course">
+    <input id="certId" placeholder="Certificate ID">
+    <input id="grade" placeholder="Grade">
+    <input id="issuerCode" type="password" placeholder="Issuer Code">
+    <button class="btn" onclick="issueCertificate()">Issue on Blockchain</button>
+    <div class="note">Ethereum • NFT Enabled</div>
+  </div>
+</section>
+
+<!-- VERIFY -->
+<section id="verify" class="page">
+  <div class="box">
+    <h2>Verify Certificate</h2>
+    <input id="verifyId" placeholder="Enter Certificate ID manually">
+    <button class="btn" onclick="verify()">Verify</button>
+    <div id="result" class="result">
+      ✔ Blockchain Verified
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page">
+  <div class="about">
+    <h2>About EduCredChain</h2>
+    <p>
+      EduCredChain is a national blockchain framework for
+      issuing and verifying academic credentials securely.
+    </p>
+    <ul>
+      <li>Ethereum / Polygon Ready</li>
+      <li>NFT-Based Certificates</li>
+      <li>QR Instant Verification</li>
+      <li>Aligned with Digital India</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+/* ============ PAGE SWITCHING (NO SCROLL) ============ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* ============ ISSUE CERTIFICATE ============ */
+async function issueCertificate() {
+  const studentName = document.getElementById("studentName").value.trim();
+  const course = document.getElementById("course").value.trim();
+  const certid = document.getElementById("certId").value.trim();
+  const grade = document.getElementById("grade").value.trim();
+  const issuerCode = document.getElementById("issuerCode").value.trim();
+
+  if (!certid) {
+    alert("Please enter a Certificate ID");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/receive", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        studentName,
+        course,
+        certid,
+        grade,
+        issuerCode
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Server response:", data);
+    alert("Certificate request sent successfully");
+  } catch (error) {
+    console.error("POST error:", error);
+    alert("Could not send issue request to localhost:5000");
+  }
+}
+
+/* ============ VERIFY CERTIFICATE ============ */
+async function verify() {
+  const certid = document.getElementById("verifyId").value.trim();
+
+  if (!certid) {
+    alert("Please enter a Certificate ID");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/receive", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ certid })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
+    }
+
+    let data = {};
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      data = { message: await response.text() };
+    }
+
+    console.log("Server response:", data);
+
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = `
+      ✔ Blockchain Verified<br>
+      Certificate ID: ${certid}<br>
+      Server Message: ${data.message || "Verified"}
+    `;
+    resultBox.style.display = "block";
+  } catch (error) {
+    console.error("POST error:", error);
+    alert(`Could not verify certificate. ${error.message}`);
+  }
+}
+
+</script>
+
+</body>
+</html>
