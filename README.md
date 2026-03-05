@@ -1,4 +1,4 @@
-# **EduCredChain: A Hybrid Blockchain-PKI-NFT Credential Ecosystem**
+# **EduCredChain: A Hybrid Blockchain-PKI Credential Ecosystem**
 
 ## Unified Multi-Layer Credential Verification System (UMCVS)
 
