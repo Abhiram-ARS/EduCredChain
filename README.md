@@ -2,7 +2,7 @@
 
 ---
 
-# Project Overview
+# 📕 Project Overview
 
 EduCredChain is a secure and tamper-resistant educational credential verification system that integrates **Blockchain technology with Public Key Infrastructure (PKI)** to prevent certificate forgery and enable reliable verification.
 
@@ -12,7 +12,7 @@ The system enables institutions to issue certificates digitally and allows third
 
 ---
 
-# Technology Stack
+# ⚙️ Technology Stack
 
 | Component            | Technology                         |
 | -------------------- | ---------------------------------- |
@@ -26,12 +26,12 @@ The system enables institutions to issue certificates digitally and allows third
 
 ---
 
-# System Flow
+# ✏️ System Flow
 
 The system operates through two main processes: **Certificate Issuance** and **Certificate Verification**.
 
 
-## Certificate Issuance
+## 1️⃣ Certificate Issuance
 
 1. The issuer enters certificate details through the web interface.
 2. The certificate data is sent to the backend server.
@@ -42,7 +42,7 @@ The system operates through two main processes: **Certificate Issuance** and **C
 7. The system confirms successful certificate issuance.
 
 
-## Certificate Verification
+## 2️⃣ Certificate Verification
 
 1. The user enters the **Certificate ID** on the verification portal.
 2. The backend retrieves the encrypted certificate data from the database.
@@ -66,7 +66,6 @@ The system architecture consists of the following modules:
 * Database Storage
 * Blockchain Network
 
----
 
 ## Architecture Diagram
 
@@ -92,27 +91,12 @@ The system architecture consists of the following modules:
 
 # Module Description
 
-### Web Interface
+- Web Interface, Provides user interaction for certificate issuance and verification through a browser-based interface.
+- Backend Server, Handles request processing, data validation, cryptographic operations, and communication with the database and blockchain.
+- Cryptographic Module, Responsible for generating hashes, performing RSA encryption/decryption, and ensuring secure credential processing.
+- Database, Stores encrypted certificate data along with metadata for retrieval during verification.
+- Blockchain Network, Stores certificate hashes to ensure **immutability and tamper resistance**.
 
-Provides user interaction for certificate issuance and verification through a browser-based interface.
-
-### Backend Server
-
-Handles request processing, data validation, cryptographic operations, and communication with the database and blockchain.
-
-### Cryptographic Module
-
-Responsible for generating hashes, performing RSA encryption/decryption, and ensuring secure credential processing.
-
-### Database
-
-Stores encrypted certificate data along with metadata for retrieval during verification.
-
-### Blockchain Network
-
-Stores certificate hashes to ensure **immutability and tamper resistance**.
-
----
 
 # Project Structure
 
@@ -165,14 +149,7 @@ EduCredChain
 **Abhiram S**
 BTEC Cyber Security Student
 
----
+# License
 
-If you want, I can also create a **very professional GitHub README version used in research projects**, including:
-
-* badges
-* workflow diagrams
-* use case diagram section
-* installation guide
-* API documentation section
-
-It will make your **project look like a real production/research repository**.
+Project is licensed under MIT license
+### 👉 License
