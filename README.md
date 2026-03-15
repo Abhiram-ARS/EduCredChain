@@ -30,6 +30,7 @@ The system enables institutions to issue certificates digitally and allows third
 
 The system operates through two main processes: **Certificate Issuance** and **Certificate Verification**.
 
+![Flowchart](https://github.com/Abhiram-ARS/EduCredChain/blob/3e75aafd0d19c7cba48baea4d8f085a578bd377f/Documents/Diagrams/flowchart.png)
 
 ## 1️⃣ Certificate Issuance
 
@@ -69,7 +70,7 @@ The system architecture consists of the following modules:
 
 ## Architecture Diagram
 
-![Architecture_Diagram](https://github.com/Abhiram-ARS/EduCredChain/blob/8077076a761129c5b68ca0b1da8ad9ec876ada0b/Documents/Diagrams/d2_architecture.png)
+![Architecture_Diagram](https://github.com/Abhiram-ARS/EduCredChain/blob/8077076a761129c5b68ca0b1da8ad9ec876ada0b/Documents/Diagrams/architecture_diagram.png)
 
 ```
 [ Web Interface ]
