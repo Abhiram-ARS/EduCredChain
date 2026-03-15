@@ -143,10 +143,10 @@ EduCredChain
 
 ---
 
-# Author
-
-**Abhiram S**
-BTEC Cyber Security Student
+# Authors 
+🧑‍💻**Abhiram S**,BTech Student
+🧑‍💻**Amarnath Mohan**,BTech Student
+🧑‍💻**Mohammed Yaseen**,BTech Student
 
 # License
 
