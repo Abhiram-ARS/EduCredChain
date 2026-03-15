@@ -1,172 +1,178 @@
-# **EduCredChain: A Hybrid Blockchain-PKI Credential Ecosystem**
+# EduCredChain - Educational Credential Blockchain <br> *A Hybrid Blockchain–PKI Architecture for Educational Credential Verification*
 
-## Unified Multi-Layer Credential Verification System (UMCVS)
+---
 
+# Project Overview
 
-A Hybrid System Combining Blockchain, NFTs, Hyperledger Fabric, and PKI for Tamper-Proof Academic Certificate Management
+EduCredChain is a secure and tamper-resistant educational credential verification system that integrates **Blockchain technology with Public Key Infrastructure (PKI)** to prevent certificate forgery and enable reliable verification.
 
+Traditional certificate verification processes are often manual, slow, and vulnerable to fraud. EduCredChain addresses these issues by storing **cryptographic hashes of certificate data on a blockchain**, ensuring immutability and transparency, while the encrypted certificate data is securely stored in a database.
 
-# ✅ Project Overview
+The system enables institutions to issue certificates digitally and allows third parties such as employers or organizations to verify their authenticity instantly.
 
-This project creates a single, multi-layered certificate verification ecosystem that uses:
+---
 
-✔ *PKI* — for digital signatures & authenticity
+# Technology Stack
 
-✔ *Hyperledger Fabric* — for private consortium ledger among institutions
+| Component            | Technology                         |
+| -------------------- | ---------------------------------- |
+| Programming Language | Python                             |
+| Web Interface        | HTML, CSS, JavaScript              |
+| Backend Framework    | Python (Flask / API-based backend) |
+| Cryptography         | RSA Encryption, SHA-256 Hashing    |
+| Database             | SQLite                             |
+| Blockchain           | Private Blockchain Network (Ganache)|
+| API Communication    | REST API                           |
 
-✔ *Public Blockchain NFTs* — for global proof of ownership
+---
 
-✔ *Blockchain Verification Portal* — for public tamper-proof validation
+# System Flow
 
-This makes it enterprise-grade, scalable, secure, and future-proof.
+The system operates through two main processes: **Certificate Issuance** and **Certificate Verification**.
 
 
-🧩 Why This Project Is Unique
+## Certificate Issuance
 
-Most certificate systems use only blockchain or only PKI, but this project uses all four, giving:
+1. The issuer enters certificate details through the web interface.
+2. The certificate data is sent to the backend server.
+3. The backend generates a **SHA-256 hash** of the certificate data.
+4. Certificate data (excluding certificate ID and date) is **encrypted using the issuer's private key**.
+5. The encrypted data and hash are stored in the **SQLite database**.
+6. The generated hash is added to the **blockchain network**.
+7. The system confirms successful certificate issuance.
 
-* Tamper-proof storage
-* Verifiable ownership
-* Decentralized trust
-* Cross-institution collaboration
-* Public transparency + private control
 
+## Certificate Verification
 
-### 🛠 Architecture (Combined Model)
+1. The user enters the **Certificate ID** on the verification portal.
+2. The backend retrieves the encrypted certificate data from the database.
+3. The corresponding hash is fetched from the blockchain.
+4. The certificate data is **decrypted using the public key**.
+5. A new SHA-256 hash is generated from the decrypted data.
+6. The newly generated hash is compared with the blockchain hash.
 
-1️⃣ PKI Layer – Authentication & Signing
+**Matching hashes → Certificate is valid**
+**Non-matching hashes → Certificate has been tampered**
 
-* Every institution acts as a Certificate Authority (CA).
-* Certificates are generated and digitally signed using the institution’s private key.
-* The verifier checks authenticity with the public key.
+---
 
-Role: Ensures cryptographic trust & authenticity.
+# System Architecture
 
-2️⃣ Hyperledger Fabric Layer – Consortium Network
+The system architecture consists of the following modules:
 
-* A private network connecting:
+* Web Interface
+* Backend Application
+* Cryptographic Processing Module
+* Database Storage
+* Blockchain Network
 
-  * Universities
-  * Colleges
-  * Verification agencies
-  * Government bodies
-* Fabric stores:
+---
 
-  * Certificate hashes
-  * Student metadata
-  * Issuer signatures
-  * Revocation status
+## Architecture Diagram
 
-Role: Secure inter-institution record sharing without exposing private data.
+*(Place architecture diagram here)*
 
 
 
-3️⃣ NFT Layer – Ownership Proof
+```
+[ Web Interface ]
+        │
+        ▼
+[ Backend Server / API ]
+        │
+        ├── Cryptographic Module (RSA + SHA256)
+        │
+        ├── SQLite Database
+        │
+        ▼
+[ Blockchain Network ]
+```
 
-* Each certificate is minted as a non-transferable NFT (Soulbound Token) on a public blockchain.
-* NFT contains:
+---
 
-  * Certificate hash
-  * Institution ID
-  * Issuer signature
-  * Verification link
+# Module Description
 
-Role: Public proof that the certificate belongs to the student & cannot be forged or traded.
+### Web Interface
 
+Provides user interaction for certificate issuance and verification through a browser-based interface.
 
-4️⃣ Blockchain Verification Portal
+### Backend Server
 
-A web portal that performs:
+Handles request processing, data validation, cryptographic operations, and communication with the database and blockchain.
 
-✔ PKI verification
-✔ Hash comparison with Hyperledger
-✔ NFT ownership validation
+### Cryptographic Module
 
-Users enter:
+Responsible for generating hashes, performing RSA encryption/decryption, and ensuring secure credential processing.
 
-* Certificate ID
-* QR code scan
-* NFT ID
+### Database
 
-System automatically verifies authenticity across all 3 layers
+Stores encrypted certificate data along with metadata for retrieval during verification.
 
-➤ Step 1: Certificate Creation
+### Blockchain Network
 
-1. Institution issues certificate.
-2. Certificate is hashed (SHA-256).
-3. Institution signs hash with its private key (PKI).
+Stores certificate hashes to ensure **immutability and tamper resistance**.
 
-➤ Step 2: Storage in Hyperledger Fabric*
+---
 
-* Certificate hash + student ID stored in Fabric ledger.
-* Smart contract ensures:
+# Project Structure
 
-  * No duplicate entries
-  * Revocation support
-  * Audit trails
+```
+EduCredChain
+│
+├── backend
+│   ├── encryption.py
+│   ├── blockchain.py
+│   ├── api.py
+│
+├── database
+│   └── certificates.db
+│
+├── web
+│   ├── index.html
+│   ├── issue.html
+│   ├── verify.html
+│
+├── utils
+│   ├── hash_generator.py
+│   └── rsa_keys.py
+│
+└── README.md
+```
 
+---
 
-➤ Step 3: NFT Minting
+# Security Mechanisms
 
-* Certificate hash is minted as a non-transferable NFT.
-* NFT metadata includes:
+* **SHA-256 hashing** ensures certificate data integrity.
+* **RSA encryption** protects sensitive credential information.
+* **Blockchain storage** prevents modification of certificate records.
+* **Digital signatures** verify the authenticity of the issuing authority.
 
-  * Hash
-  * Issuer signature
-  * Student blockchain address
-  * Hyperledger reference ID
+---
 
+# Future Improvements
 
+* Smart contract based certificate management
+* Multi-institution blockchain network
+* QR code based certificate verification
+* IPFS integration for decentralized storage
+* Mobile verification application
 
-➤ Step 4: Verification Portal
+---
 
-When a verifier (employer, university) scans QR / enters ID:
+# Author
 
-System checks:
+**Abhiram S**
+BTEC Cyber Security Student
 
-1. PKI:
+---
 
-Verifies signature is valid.
+If you want, I can also create a **very professional GitHub README version used in research projects**, including:
 
-2. Hyperledger Fabric:
+* badges
+* workflow diagrams
+* use case diagram section
+* installation guide
+* API documentation section
 
-Matches certificate hash and status.
-
-3. NFT Blockchain:
-
-Checks public NFT ownership & immutability.
-
-Verification result: Authentic / Tampered / Revoked / Suspicious
-
-
-
- 📦 Modules in the Project
-
- ✔ Certificate Issuance Module
- ✔ PKI Signing Engine
- ✔ Hyperledger Fabric Smart Contract
- ✔ NFT Minting Module (ERC-721 / Soulbound)
- ✔ QR Code Generator
- ✔ Certificate Verification Portal
- ✔ Revocation Management System
- ✔ Student Wallet
-
-
-
- 🧪 Technologies to Use
-
-Backend: Python / JS
-Frontend: Classic HTML+CSS+JS
-Databases: JSON
-
-
-
-🌟 Advantages of This Unified System
-
-✔ Near-zero forgery
-✔ Immutable history
-✔ Strong cryptographic trust
-✔ Public + private blockchain combined
-✔ Verifiable from anywhere
-✔ Inter-college collaboration
-✔ Zero-trust, decentralized model
+It will make your **project look like a real production/research repository**.
