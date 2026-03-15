@@ -69,9 +69,7 @@ The system architecture consists of the following modules:
 
 ## Architecture Diagram
 
-*(Place architecture diagram here)*
-
-
+![Architecture_Diagram](https://github.com/Abhiram-ARS/EduCredChain/blob/8077076a761129c5b68ca0b1da8ad9ec876ada0b/Documents/Diagrams/d2_architecture.png)
 
 ```
 [ Web Interface ]
@@ -152,4 +150,5 @@ BTEC Cyber Security Student
 # License
 
 Project is licensed under MIT license
-### 👉 License
+### 👉 [License](https://github.com/Abhiram-ARS/EduCredChain/blob/8077076a761129c5b68ca0b1da8ad9ec876ada0b/LICENSE)
+---
