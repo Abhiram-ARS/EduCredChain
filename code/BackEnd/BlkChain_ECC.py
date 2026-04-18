@@ -7,8 +7,6 @@ Description   : Core blockchain module handling smart contract deployment, certi
 
 Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
 
-Academic Year : 2025–2026
-
 Last Modified : 18-04-2026
 """
 
