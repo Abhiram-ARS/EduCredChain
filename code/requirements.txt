@@ -1,1 +1,5 @@
-pycryptodome==3.23.0
+fastapi>=0.110.0
+uvicorn>=0.29.0
+web3>=6.0.0
+py-solc-x>=1.1.1
+cryptography>=42.0.0
