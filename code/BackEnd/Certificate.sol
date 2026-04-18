@@ -1,4 +1,15 @@
-// SPDX-License-Identifier: MIT
+/*
+Project Title : EduCredChain
+Description   : Blockchain-Based Certificate Verification System
+
+File Name     : Certificate.sol
+Description   : Smart contract for managing certificate issuance, verification, and revocation on the blockchain
+
+Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
+
+Last Modified : 18-04-2026
+*/
+
 pragma solidity ^0.8.17;
 
 contract CertificateRegistry {
