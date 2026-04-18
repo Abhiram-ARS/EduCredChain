@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EduCredChain | Blockchain Certificate Verification</title>
+
+<style>
+/* ================= GLOBAL ================= */
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden; /* 🔒 NO SCROLL */
+  font-family: "Segoe UI", sans-serif;
+  background:#f4f6f8;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  height:60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  background:#0a1a2f;
+  color:#fff;
+}
+.navbar a {
+  color:#fff;
+  margin-left:20px;
+  text-decoration:none;
+  cursor:pointer;
+}
+.logo {
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* ================= PAGE SYSTEM ================= */
+.page {
+  position:absolute;
+  top:60px;
+  left:0;
+  width:100vw;
+  height:calc(100vh - 60px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.4s ease;
+}
+
+.page.active {
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ================= HOME ================= */
+#home {
+  background:radial-gradient(circle at top,#123a63,#000);
+  color:white;
+}
+
+.blockchain-bg {
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:move 20s linear infinite;
+}
+
+@keyframes move {
+  to { background-position:400px 400px; }
+}
+
+.home-content {
+  position:relative;
+  text-align:center;
+  z-index:2;
+}
+
+.home-content h1 {
+  font-size:42px;
+}
+.home-content p {
+  opacity:0.9;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  padding:12px 26px;
+  background:#1a73e8;
+  color:white;
+  border:none;
+  border-radius:6px;
+  margin:10px;
+  cursor:pointer;
+}
+.btn.outline {
+  background:none;
+  border:1px solid white;
+}
+
+/* ================= BOX / FORMS ================= */
+.box {
+  background:white;
+  padding:30px;
+  width:360px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.box h2 {
+  text-align:center;
+}
+.box input, select {
+  width:100%;
+  height:48px;
+  margin:12px 0;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  box-sizing:border-box;
+  display:block;
+}
+
+.note {
+  font-size:13px;
+  color:gray;
+  margin-top:10px;
+}
+
+/* ================= VERIFY RESULT ================= */
+.result {
+  margin-top:15px;
+  background:#e8f5e9;
+  padding:10px;
+  border-radius:6px;
+  font-size:14px;
+  display:none;
+}
+
+/* ================= ABOUT ================= */
+.about {
+  background:white;
+  padding:40px;
+  width:60%;
+  border-radius:12px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:#0a1a2f;
+  color:white;
+  text-align:center;
+  padding:6px;
+  font-size:12px;
+}
+
+/* ================= SPLIT LAYOUT (ISSUER / VERIFY) ================= */
+#issuer, #verify {
+  align-items: stretch;
+  padding: 0;
+}
+
+.split-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.split-left {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f4f8;
+  padding: 30px;
+  box-sizing: border-box;
+  border-right: 1px solid #d0d8e4;
+}
+
+.split-left .box {
+  width: 100%;
+  max-width: 380px;
+}
+
+.split-right {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8eef7;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+/* ================= CERT PLACEHOLDER ================= */
+.cert-placeholder {
+  text-align: center;
+  color: #8a97a8;
+  user-select: none;
+}
+
+.cert-placeholder .ph-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.45;
+}
+
+.cert-placeholder p {
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* ================= SUMMARY PANEL ================= */
+.cert-model {
+  display: none;
+  width: 100%;
+  max-width: 560px;
+  background: #fff;
+  border: 1px solid #cfdae9;
+  border-radius: 14px;
+  padding: 24px 28px;
+  text-align: left;
+  box-shadow: 0 16px 40px rgba(10,26,47,0.09), 0 4px 16px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: scale(0.95) translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  position: relative;
+  box-sizing: border-box;
+}
+
+#issuerCert {
+  max-width: 700px;
+}
+#verifyCert {
+  max-width: 700px;
+}
+.cert-model::before {
+  display: none;
+}
+
+.cert-model.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.cert-header {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #4f6f96;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.cert-org {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0a1a2f;
+  margin: 0 0 8px;
+}
+
+.cert-subtitle {
+  font-size: 13px;
+  color: #607895;
+  margin-bottom: 14px;
+}
+
+.cert-divider {
+  height: 1px;
+  background: #dbe4f1;
+  margin: 14px 0;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.cert-awarded {
+  font-size: 12px;
+  color: #8093a8;
+  margin-bottom: 10px;
+}
+
+.cert-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a1a2f;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+}
+
+.cert-course-label {
+  font-size: 12px;
+  color: #8093a8;
+  margin-bottom: 10px;
+}
+
+.cert-course {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e4a8d;
+  margin: 0;
+}
+
+.cert-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 8px 0 0;
+}
+
+.cert-meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f7faff;
+  border: 1px solid #dde7f5;
+  border-radius: 8px;
+}
+
+.cert-meta-item .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #7f93ab;
+  margin-bottom: 0;
+}
+
+.cert-meta-item .value {
+  font-weight: 700;
+  color: #112640;
+  font-size: 13px;
+}
+
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef4ff;
+  color: #1a4f96;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 16px;
+  border: 1px solid #bfd2f0;
+}
+
+.cert-meta-item.verified {
+  background: #e8f5e9;
+  border-color: #a5d6a7;
+}
+
+.cert-meta-item.not-verified {
+  background: #ffebee;
+  border-color: #ef9a9a;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">EduCredChain</div>
+  <div>
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('issuer')">Issue</a>
+    <a onclick="showPage('verify')">Verify</a>
+    <a onclick="showPage('login')">Revoke</a>
+    <a href="https://abhiram-ars.github.io/EduCredChain/">About</a>
+  </div>
+</div>
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="blockchain-bg"></div>
+  <div class="home-content">
+    <h1>Educational Credential on Blockchain</h1>
+    <p>Tamper-Proof • Blockchain-Based</p>
+    <button class="btn" onclick="showPage('verify')">Verify Certificate</button>
+    <button class="btn outline" onclick="showPage('issuer')">Issue Certificate</button>
+  </div>
+  <footer>© 2026 EduCredChain | Digital India Prototype</footer>
+</section>
+
+<!-- REVOKE -->
+<section id="login" class="page">
+  <div class="split-layout">
+    <div class="split-left">
+      <div class="box">
+        <h2>Revoke Certificate</h2>
+        <input id="revokeCertId" placeholder="Certificate ID">
+        <input id="revokeIssuerCode" type="password" placeholder="Issuer Code">
+        <button type="button" class="btn" onclick="fetchForRevoke(event)">Fetch from Database</button>
+        <div id="revokeResult" class="result"></div>
+        <div class="note">Only authorized issuers can revoke</div>
+      </div>
+    </div>
+    <div class="split-right">
+      <div class="cert-placeholder" id="revokePlaceholder">
+        <div class="ph-icon">🚫</div>
+        <p>Enter a Certificate ID and Issuer Code,<br>then click <strong>Fetch from Database</strong><br>to load certificate details</p>
+      </div>
+      <div class="cert-model" id="revokeCert">
+        <div class="cert-header">Revocation Summary</div>
+        <div class="cert-org">Certificate Details</div>
+        <div class="cert-subtitle">Review before revoking. This action cannot be undone.</div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta-item">
+          <div class="label">Student Name</div>
+          <div class="value" id="rc-name">—</div>
+        </div>
+        <div class="cert-meta-item" style="margin-top:10px;">
+          <div class="label">Course</div>
+          <div class="value" id="rc-course">—</div>
+        </div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta">
+          <div class="cert-meta-item">
+            <div class="label">Grade</div>
+            <div class="value" id="rc-grade">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Certificate ID</div>
+            <div class="value" id="rc-certid">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Date Issued</div>
+            <div class="value" id="rc-date">—</div>
+          </div>
+        </div>
+        <button type="button" class="cert-badge" style="background:#fff0f0;color:#c0392b;border-color:#f5a8a8;" onclick="revokeCertificate()">🚫 Revoke Certificate</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ISSUER -->
+<section id="issuer" class="page">
+  <div class="split-layout">
+    <div class="split-left">
+      <div class="box">
+        <h2>Issue Certificate</h2>
+        <input id="studentName" placeholder="Student Name">
+        <input id="course" placeholder="Course">
+        <input id="certId" placeholder="Certificate ID">
+        <input id="grade" placeholder="Grade">
+        <input id="issuerCode" type="password" placeholder="Issuer Code">
+        <button type="button" class="btn" onclick="issueCertificate(event)">Issue on Blockchain</button>
+        <div class="note">Ethereum • NFT Enabled</div>
+      </div>
+    </div>
+    <div class="split-right">
+      <div class="cert-placeholder" id="issuerPlaceholder">
+        <div class="ph-icon">🎓</div>
+        <p>Fill in the details and click<br><strong>Issue on Blockchain</strong><br>to view the summary</p>
+      </div>
+      <div class="cert-model" id="issuerCert">
+        <div class="cert-header">Issue Summary</div>
+        <div class="cert-org">Certificate Request Submitted</div>
+        <div class="cert-subtitle">The following details were prepared for blockchain issuance.</div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta-item">
+          <div class="label">Student Name</div>
+          <div class="value" id="ic-name">—</div>
+        </div>
+        <div class="cert-meta-item" style="margin-top:10px;">
+          <div class="label">Course</div>
+          <div class="value" id="ic-course">—</div>
+        </div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta">
+          <div class="cert-meta-item">
+            <div class="label">Grade</div>
+            <div class="value" id="ic-grade">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Certificate ID</div>
+            <div class="value" id="ic-certid">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Date Issued</div>
+            <div class="value" id="ic-date">—</div>
+          </div>
+        </div>
+        <div class="cert-badge">✔ Issue action completed</div>
+        <button type="button" id="issueAcknowledgeBtn" class="btn" style="display:none; margin-top:14px;" onclick="acknowledgeIssue()">Okay</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERIFY -->
+<section id="verify" class="page">
+  <div class="split-layout">
+    <div class="split-left">
+      <div class="box">
+        <h2>Verify Certificate</h2>
+        <input id="certid" placeholder="Enter Certificate ID manually">
+        <button type="button" class="btn" onclick="fetchCertificate(event)">Fetch from Database</button>
+        <div id="result" class="result">
+          ✔ Blockchain Verified
+        </div>
+      </div>
+    </div>
+    <div class="split-right">
+      <div class="cert-placeholder" id="verifyPlaceholder">
+        <div class="ph-icon">🔍</div>
+        <p>Enter a Certificate ID and click<br><strong>Verify</strong><br>to view the verification summary</p>
+      </div>
+      <div class="cert-model" id="verifyCert">
+        <div class="cert-header">Verification Summary</div>
+        <div class="cert-org">Certificate Verification Complete</div>
+        <div class="cert-subtitle">Result details fetched from the blockchain verification flow.</div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta-item">
+          <div class="label">Student Name</div>
+          <div class="value" id="vc-name">—</div>
+        </div>
+        <div class="cert-meta-item" style="margin-top:10px;">
+          <div class="label">Course</div>
+          <div class="value" id="vc-course">—</div>
+        </div>
+        <div class="cert-divider"></div>
+        <div class="cert-meta">
+          <div class="cert-meta-item">
+            <div class="label">Grade</div>
+            <div class="value" id="vc-grade">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Certificate ID</div>
+            <div class="value" id="vc-certid">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Date Issued</div>
+            <div class="value" id="vc-date">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Stored Hash</div>
+            <div class="value" id="vc-stored-hash">—</div>
+          </div>
+          <div class="cert-meta-item">
+            <div class="label">Calculated Hash</div>
+            <div class="value" id="vc-calculated-hash">—</div>
+          </div>
+        </div>
+        <button type="button" class="cert-badge" onclick="verifyCertificate()">✔ Verify with Blockchain</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+/* ============ HTML ESCAPE HELPER ============ */
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ============ HASH HELPER ============ */
+async function sha256Hex(value) {
+  const encoded = new TextEncoder().encode(String(value));
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/* ============ CERT PANEL HELPERS ============ */
+function revealCert(placeholderId, certId) {
+  document.getElementById(placeholderId).style.display = 'none';
+  const cert = document.getElementById(certId);
+  cert.style.display = 'block';
+  requestAnimationFrame(() => requestAnimationFrame(() => cert.classList.add('visible')));
+}
+
+function resetCert(placeholderId, certId) {
+  const ph = document.getElementById(placeholderId);
+  const cert = document.getElementById(certId);
+  if (!ph || !cert) return;
+  ph.style.display = '';
+  cert.style.display = 'none';
+  cert.classList.remove('visible');
+
+  if (certId === 'issuerCert') {
+    const acknowledgeBtn = document.getElementById('issueAcknowledgeBtn');
+    if (acknowledgeBtn) acknowledgeBtn.style.display = 'none';
+  }
+}
+
+function acknowledgeIssue() {
+  sessionStorage.removeItem('issuerCertState');
+  resetCert('issuerPlaceholder', 'issuerCert');
+  ['studentName', 'course', 'certId', 'grade', 'issuerCode'].forEach((id) => {
+    const input = document.getElementById(id);
+    if (input) input.value = '';
+  });
+}
+
+/* ============ PAGE SWITCHING (NO SCROLL) ============ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Keep issuer summary visible after successful issue until user acknowledges.
+  if (id === 'issuer' && !sessionStorage.getItem('issuerCertState')) {
+    resetCert('issuerPlaceholder', 'issuerCert');
+  }
+  if (id === 'verify') resetCert('verifyPlaceholder', 'verifyCert');
+  if (id === 'login') resetCert('revokePlaceholder', 'revokeCert');
+}
+
+/* ============ RESTORE ISSUER PANEL AFTER RELOAD ============ */
+(function restoreIssuerState() {
+  const raw = sessionStorage.getItem('issuerCertState');
+  if (!raw) return;
+
+  try {
+    const state = JSON.parse(raw);
+    if (!state || !state.certid) return;
+
+    document.getElementById('ic-name').textContent = state.studentName || '—';
+    document.getElementById('ic-course').textContent = state.course || '—';
+    document.getElementById('ic-grade').textContent = state.grade || '—';
+    document.getElementById('ic-certid').textContent = state.certid || '—';
+    document.getElementById('ic-date').textContent = state.date || new Date().toLocaleDateString();
+
+    const issueBadge = document.querySelector('#issuerCert .cert-badge');
+    const acknowledgeBtn = document.getElementById('issueAcknowledgeBtn');
+    if (issueBadge) issueBadge.textContent = state.badgeText || '✔ Issue action completed';
+    if (acknowledgeBtn) acknowledgeBtn.style.display = 'inline-block';
+
+    revealCert('issuerPlaceholder', 'issuerCert');
+    showPage('issuer');
+  } catch (_) {
+    sessionStorage.removeItem('issuerCertState');
+  }
+})();
+
+/* ============ FETCH FOR REVOKE ============ */
+async function fetchForRevoke(event) {
+  if (event) event.preventDefault();
+  const certid = document.getElementById('revokeCertId').value.trim();
+  const resultBox = document.getElementById('revokeResult');
+
+  if (!certid) {
+    alert('Please enter a Certificate ID');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:5000/receive', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ operation: 'fetch', data: { certid } })
+    });
+
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+    const data = await response.json();
+    console.log('Revoke fetch response:', data);
+
+    const certPanel = document.getElementById('revokeCert');
+    const revokeBtn = certPanel.querySelector('.cert-badge');
+    certPanel.querySelectorAll('.cert-meta-item').forEach(item => item.classList.remove('verified', 'not-verified'));
+    if (revokeBtn) { revokeBtn.textContent = '\uD83D\uDEAB Revoke Certificate'; revokeBtn.style.display = ''; }
+
+    if (data.status === 0) {
+      resultBox.innerHTML = `⚠ Database Tampered<br>Certificate ID: ${escHtml(certid)}`;
+      resultBox.style.background = '#ffebee';
+      resultBox.style.display = 'block';
+      if (revokeBtn) revokeBtn.style.display = 'none';
+    } else {
+      resultBox.innerHTML = `✔ Data found on Records<br>Certificate ID: ${escHtml(certid)}`;
+      resultBox.style.background = '#e8f5e9';
+      resultBox.style.display = 'block';
+    }
+
+    const certData = Array.isArray(data)
+      ? { certid: data[0] || certid, studentName: data[1], course: data[2], date: data[3], grade: data[4] }
+      : { certid, studentName: data.studentName, course: data.course, grade: data.grade, date: data.date };
+
+    document.getElementById('rc-certid').textContent = certData.certid || certid;
+    document.getElementById('rc-name').textContent = certData.studentName || '—';
+    document.getElementById('rc-course').textContent = certData.course || '—';
+    document.getElementById('rc-grade').textContent = certData.grade || '—';
+    document.getElementById('rc-date').textContent = certData.date ||
+      new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    revealCert('revokePlaceholder', 'revokeCert');
+
+    document.getElementById('revokeCertId').value = '';
+  } catch (error) {
+    console.error('Fetch for revoke error:', error);
+    alert(`Could not fetch certificate. ${error.message}`);
+  }
+}
+
+/* ============ REVOKE CERTIFICATE ============ */
+async function revokeCertificate() {
+  const certid = document.getElementById('rc-certid').textContent.trim();
+  const issuerCode = document.getElementById('revokeIssuerCode').value.trim();
+  const resultBox = document.getElementById('revokeResult');
+
+  if (!certid || certid === '—') {
+    alert('Fetch certificate data before revoking.');
+    return;
+  }
+
+  try {
+    const issuerCodeHash = await sha256Hex(issuerCode);
+    console.log(issuerCode)
+    console.log(issuerCodeHash)
+
+    const response = await fetch('http://localhost:5000/receive', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        operation: 'revoke',
+        data: { certid },
+        issuercode: issuerCodeHash
+      })
+    });
+
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+    const data = await response.json();
+    console.log('Revoke response:', data);
+
+    const certPanel = document.getElementById('revokeCert');
+    const revokeBtn = certPanel.querySelector('.cert-badge');
+    const success = data.status === 1 || String(data.message || '').toLowerCase().includes('revok');
+
+    certPanel.querySelectorAll('.cert-meta-item').forEach(item => {
+      item.classList.remove('verified', 'not-verified');
+      item.classList.add(success ? 'not-verified' : 'not-verified');
+    });
+    if (revokeBtn) revokeBtn.textContent = success ? '✔ Revoked' : '✖ Revocation Failed';
+
+    resultBox.innerHTML = success
+      ? `✔ Certificate Revoked<br>ID: ${escHtml(certid)}`
+      : `✖ Revocation Failed<br>${escHtml(data.message || 'Unknown error')}`;
+    resultBox.style.background = success ? '#e8f5e9' : '#ffebee';
+    resultBox.style.display = 'block';
+  } catch (error) {
+    console.error('Revoke error:', error);
+    resultBox.innerHTML = `✖ Error: ${escHtml(error.message)}`;
+    resultBox.style.background = '#ffebee';
+    resultBox.style.display = 'block';
+  } finally {
+    document.getElementById('revokeIssuerCode').value = '';
+  }
+}
+
+/* ============ ISSUE CERTIFICATE ============ */
+async function issueCertificate(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const studentName = document.getElementById("studentName").value.trim();
+  const course = document.getElementById("course").value.trim();
+  const certid = document.getElementById("certId").value.trim();
+  const grade = document.getElementById("grade").value.trim();
+  const issuerCode = document.getElementById("issuerCode").value.trim();
+
+  if (!certid) {
+    alert("Please enter a Certificate ID");
+    return;
+  }
+
+  // ✅ SHOW UI FIRST
+  document.getElementById('ic-name').textContent = studentName || '—';
+  document.getElementById('ic-course').textContent = course || '—';
+  document.getElementById('ic-grade').textContent = grade || '—';
+  document.getElementById('ic-certid').textContent = certid;
+  document.getElementById('ic-date').textContent = new Date().toLocaleDateString();
+
+  revealCert('issuerPlaceholder', 'issuerCert');
+  const issueBadge = document.querySelector('#issuerCert .cert-badge');
+  const acknowledgeBtn = document.getElementById('issueAcknowledgeBtn');
+  if (issueBadge) issueBadge.textContent = '⏳ Submitting request...';
+  if (acknowledgeBtn) acknowledgeBtn.style.display = 'none';
+
+  try {
+    const issuerCodeHash = await sha256Hex(issuerCode);
+
+    const response = await fetch("http://localhost:5000/receive", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        operation: "issue",
+        data: { studentName, course, certid, grade },
+        issuercode: issuerCodeHash
+      })
+    });
+
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+    if (issueBadge) issueBadge.textContent = '✔ Issue action completed';
+
+    sessionStorage.setItem('issuerCertState', JSON.stringify({
+      studentName,
+      course,
+      grade,
+      certid,
+      date: document.getElementById('ic-date').textContent,
+      badgeText: '✔ Issue action completed'
+    }));
+  } catch (error) {
+    console.error("Backend error:", error);
+    if (issueBadge) issueBadge.textContent = '✖ Issue request failed';
+
+    sessionStorage.setItem('issuerCertState', JSON.stringify({
+      studentName,
+      course,
+      grade,
+      certid,
+      date: document.getElementById('ic-date').textContent,
+      badgeText: '✖ Issue request failed'
+    }));
+  } finally {
+    if (acknowledgeBtn) acknowledgeBtn.style.display = 'inline-block';
+  }
+
+  return false;
+}
+/* ============ FETCH CERTIFICATE ============ */
+async function fetchCertificate(event) {
+  if (event) event.preventDefault();
+  const certid = document.getElementById("certid").value.trim();
+
+  if (!certid) {
+    alert("Please enter a Certificate ID");
+    return;
+  }
+
+  try {
+
+    const response = await fetch("http://localhost:5000/receive", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        operation: "fetch",
+        data: {certid}
+      })
+    });
+
+    
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+    let data = {};
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      data = { message: await response.text() };
+    }
+
+    console.log("Server response:", data);
+
+    let certData = {
+      certid,
+      studentName: data.studentName,
+      course: data.course,
+      grade: data.grade,
+      date: data.date,
+      storedHash: data.certhash || data.hash,
+      calculatedHash: data.recalculated_hash || data.calculated_hash || data.hash,
+      message: data.message
+    };
+
+    // Support backend shape: [certid, studentName, course, date, grade, hash]
+    if (Array.isArray(data)) {
+      certData = {
+        certid: data[0] || certid,
+        studentName: data[1],
+        course: data[2],
+        date: data[3],
+        grade: data[4],
+        storedHash: data[5],
+        calculatedHash: data[5],
+        message: "Verified"
+      };
+    }
+
+    const resultBox = document.getElementById("result");
+    const certPanel = document.getElementById('verifyCert');
+    const verifyBtn = certPanel.querySelector('.cert-badge');
+
+    // Reset verify state for fresh fetch
+    certPanel.querySelectorAll('.cert-meta-item').forEach(item => item.classList.remove('verified', 'not-verified'));
+    if (verifyBtn) { verifyBtn.textContent = '✔ Verify with Blockchain'; verifyBtn.style.display = ''; }
+
+    if (data.status === 0) {
+      resultBox.innerHTML = `⚠ Database Tampered<br>Certificate ID: ${escHtml(certData.certid || certid)}<br>Data integrity check failed`;
+      resultBox.style.background = '#ffebee';
+      resultBox.style.display = "block";
+      if (verifyBtn) verifyBtn.style.display = 'none';
+    } else {
+      resultBox.innerHTML = `✔ Data found on Records<br>Certificate ID: ${escHtml(certData.certid || certid)}<br>Hash Matched`;
+      resultBox.style.background = '#e8f5e9';
+      resultBox.style.display = "block";
+    }
+
+    document.getElementById('vc-certid').textContent = certData.certid || certid;
+    document.getElementById('vc-name').textContent = certData.studentName || '—';
+    document.getElementById('vc-course').textContent = certData.course || '—';
+    document.getElementById('vc-grade').textContent = certData.grade || '—';
+    document.getElementById('vc-stored-hash').textContent = certData.storedHash || '—';
+    document.getElementById('vc-calculated-hash').textContent = certData.calculatedHash || '—';
+    document.getElementById('vc-date').textContent = certData.date ||
+      new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    revealCert('verifyPlaceholder', 'verifyCert');
+
+    document.getElementById('certid').value = '';
+  } catch (error) {
+    console.error("POST error:", error);
+    alert(`Could not verify certificate. ${error.message}`);
+  }
+}
+
+/* ============ VERIFY ACTION ============ */
+async function verifyCertificate() {
+  const certid = document.getElementById('vc-certid').textContent.trim();
+  const studentName = document.getElementById('vc-name').textContent.trim();
+  const course = document.getElementById('vc-course').textContent.trim();
+  const grade = document.getElementById('vc-grade').textContent.trim();
+  const date = document.getElementById('vc-date').textContent.trim();
+
+  const normalize = (value) => (value === '—' ? '' : value);
+  const verifyPayload = {
+    certid: normalize(certid),
+    studentName: normalize(studentName),
+    course: normalize(course),
+    grade: normalize(grade),
+    date: normalize(date)
+  };
+
+  if (!verifyPayload.certid) {
+    alert('Fetch certificate data before verifying.');
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/receive", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        operation: "verify",
+        data: verifyPayload
+      })
+    });
+
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+    let verifyResult = {};
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      verifyResult = await response.json();
+    } else {
+      verifyResult = { message: await response.text() };
+    }
+
+    const certificateStatus = String(verifyResult.certificate_status || '').trim();
+    const normalizedStatus = certificateStatus.toLowerCase();
+    const isActive = normalizedStatus
+      ? normalizedStatus === 'active'
+      : verifyResult.status === 1;
+    const certPanel = document.getElementById('verifyCert');
+    certPanel.querySelectorAll('.cert-meta-item').forEach(item => {
+      item.classList.remove('verified', 'not-verified');
+      item.classList.add(isActive ? 'verified' : 'not-verified');
+    });
+    const verifyBtn = certPanel.querySelector('.cert-badge');
+    if (verifyBtn) verifyBtn.textContent = isActive ? '✔ Verified' : '✖ Not on Blockchain';
+
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = isActive
+      ? `✔ Certificate Active<br>Certificate ID: ${escHtml(verifyPayload.certid)}<br>Status: ${escHtml(certificateStatus || 'Active')}`
+      : `✖ Verification Failed<br>Certificate ID: ${escHtml(verifyPayload.certid)}<br>Status: ${escHtml(certificateStatus || 'Not on Blockchain')}`;
+    resultBox.style.background = isActive ? '#e8f5e9' : '#ffebee';
+    resultBox.style.display = "block";
+  } catch (error) {
+    console.error("VERIFY POST error:", error);
+    alert(`Could not send verification request. ${error.message}`);
+  }
+}
+
+</script>
+
+</body>
+</html>
