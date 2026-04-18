@@ -1,3 +1,16 @@
+"""
+Project Title : EduCredChain
+Description   : Blockchain-Based Certificate Verification System
+
+File Name     : dbBypass.py
+Description   : Database Bypass Application used for direct interaction with the database to perform testing and execute various test cases
+
+Note          : This module is NOT part of the main system workflow. It is intended only for testing, debugging, and manual database operations.
+
+Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
+
+Last Modified : 18-04-2026
+"""
 import sqlite3
 import os
 import base64
