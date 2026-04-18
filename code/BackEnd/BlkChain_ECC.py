@@ -1,5 +1,16 @@
-# EduCredChain: A Hybrid Blockchain-PKI Credential Ecosystem
-# ==========================================================
+"""
+Project Title : EduCredChain
+Description   : Blockchain-Based Certificate Verification System
+
+File Name     : BlkChain_ECC.py
+Description   : Core blockchain module handling smart contract deployment, certificate hashing, issuance, verification, and revocation using Web3
+
+Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
+
+Academic Year : 2025–2026
+
+Last Modified : 18-04-2026
+"""
 
 from datetime import datetime
 import hashlib
