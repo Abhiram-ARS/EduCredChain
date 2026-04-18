@@ -1,3 +1,15 @@
+"""
+Project Title : EduCredChain
+Description   : Blockchain-Based Certificate Verification System
+
+File Name     : API_ECC.py
+Description   : FastAPI backend server handling certificate issuance, verification, fetching, and revocation via API endpoints
+
+Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
+
+Last Modified : 18-04-2026
+"""
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
