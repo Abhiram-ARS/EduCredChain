@@ -101,25 +101,27 @@ The system architecture consists of the following modules:
 
 ```
 EduCredChain
+|
+code
 │
-├── backend
-│   ├── encryption.py
-│   ├── blockchain.py
-│   ├── api.py
+├── BackEnd
+│   ├── API_ECC.py
+│   ├── BlkChain_ECC.py
+│   ├── Certificate.sol
+│   ├── SQL_ECC.py
+│   │
+│   └── Database_Bypass_Application
+│       ├── dbBypass.py
+│       └── Readme.md
 │
-├── database
+├── FrontEnd
+│   └── index.html
+│
+├── Database
 │   └── certificates.db
 │
-├── web
-│   ├── index.html
-│   ├── issue.html
-│   ├── verify.html
-│
-├── utils
-│   ├── hash_generator.py
-│   └── rsa_keys.py
-│
-└── README.md
+└──  requirements.txt
+
 ```
 
 ---
