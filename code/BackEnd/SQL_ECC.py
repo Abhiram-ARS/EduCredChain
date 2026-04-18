@@ -1,3 +1,15 @@
+"""
+Project Title : EduCredChain
+Description   : Blockchain-Based Certificate Verification System
+
+File Name     : SQL_ECC.py
+Description   : Database module managing certificate storage with SQLite and RSA encryption/decryption for secure data handling
+
+Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
+
+Last Modified : 18-04-2026
+"""
+
 import sqlite3
 import os
 from cryptography.hazmat.primitives.asymmetric import padding
