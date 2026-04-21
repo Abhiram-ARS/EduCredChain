@@ -28,16 +28,6 @@ app.add_middleware(
 
 bk = BlkChain_ECC.BlkChain_funct()
 
-"""def log_data(t,entry):
-    typ="IN___- "
-    if t==1:
-        typ = "OUT__- "
-    
-    data = typ+" * "
-    for i in entry:
-        data+= i+":"+entry[i]
-    with open("log_ECC.txt",'a') as f:
-        f.write(data)"""
 
 def issue(data,key):
     if key == "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918":
@@ -76,32 +66,27 @@ def revoke(data,key):
 async def receive_data(request: Request):
     print('-'*50)
     data = await request.json()
-    #log_data("0",data)
     print("Calling   => ",data)
 
     if data['operation']=="issue":
         value = issue(data['data'],data["issuercode"])
         print("Returning => ",value)
-        #log_data(1,value)
         return value
     
     
     elif data['operation']=="fetch":
         value = fetch(data["data"]["certid"])
         print("Returning => ",value)
-        #log_data(1,value)
         return value
     
     elif data['operation']=="verify":
         value = verify(data['data'])
         print("Returning => ",value)
-        #log_data(1,value)
         return value
     
     elif data['operation']=="revoke":
         value = revoke(data['data'],data["issuercode"])
         print("Returning => ",value)
-        #log_data(1,value)
         return value
     print('-'*50)
     return {"message": "Data received successfully"}
