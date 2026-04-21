@@ -9,7 +9,6 @@ Author(s)     : ABHIRAM_S, AMARNATH MOHAN, MOHAMMED YASEEN
 
 Last Modified : 18-04-2026
 """
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -61,7 +60,7 @@ def verify(data):
 
 def revoke(data,key):    
     print(data)
-    print(key, key == "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918")
+    print("Key Matching Status :", key == "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918")
     if key == "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918":
         report = bk.revoke_certificate(data)
         return (report)
@@ -75,30 +74,36 @@ def revoke(data,key):
 
 @app.post("/receive")
 async def receive_data(request: Request):
+    print('-'*50)
     data = await request.json()
     #log_data("0",data)
-    
+    print("Calling   => ",data)
+
     if data['operation']=="issue":
         value = issue(data['data'],data["issuercode"])
+        print("Returning => ",value)
         #log_data(1,value)
         return value
     
     
     elif data['operation']=="fetch":
         value = fetch(data["data"]["certid"])
+        print("Returning => ",value)
         #log_data(1,value)
         return value
     
     elif data['operation']=="verify":
         value = verify(data['data'])
+        print("Returning => ",value)
         #log_data(1,value)
         return value
     
     elif data['operation']=="revoke":
         value = revoke(data['data'],data["issuercode"])
+        print("Returning => ",value)
         #log_data(1,value)
         return value
-
+    print('-'*50)
     return {"message": "Data received successfully"}
 
 if __name__ == "__main__":
