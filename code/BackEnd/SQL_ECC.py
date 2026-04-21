@@ -141,4 +141,3 @@ class Sql_db:
         )
 
         return decrypted.decode()
-
