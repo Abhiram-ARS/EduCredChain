@@ -186,7 +186,7 @@ class BlkChain_funct:
 
     def fetch_certificate(self,certid):
         row = self.sqlecc.select_record(str(certid))
-        print("=",row)
+        print("Row Fetched =",row)
         if not row:
             print("Certificate not found in DB")
             return{"status":0,
@@ -215,7 +215,6 @@ class BlkChain_funct:
     def verify_certificate(self, data):
         # Accept either a DB row tuple/list or API payload dict.
         #{name}|{course_id}|{certificate_no}|{issue_date}|{grade}
-        print(data)
         row = [data['studentName'],data['course'],data['certid'],data['date'],data['grade']]
         
         # Recompute hash from DB fields and compare with stored hash before chain check.
@@ -253,7 +252,7 @@ class BlkChain_funct:
                 status = "Revoked"
             else:
                 status = "Active"
-            print("\n\n ********",status,"********\n\n")
+            print("Certificate Verification, Status :",status)
             return{"status":1,
                    "certificate_status":status,
                    "issuedat":issued_at,
@@ -269,7 +268,6 @@ class BlkChain_funct:
 
     def revoke_certificate(self, data):
         row = self.sqlecc.select_record(str(data['certid']))
-        print(1)
         if not row:
             return {"status": 0,
                     "Error": "EDB01",
@@ -277,7 +275,6 @@ class BlkChain_funct:
 
         cert_hash_hex = row[5]
         try:
-            print(2)
             cert_hash = bytes.fromhex(cert_hash_hex)
         except Exception:
             return {"status": 0,
@@ -285,7 +282,6 @@ class BlkChain_funct:
                     "Message": "Hash_Decode_Error"}
 
         try:
-            print(3)
             tx_hash = self.contract.functions.revokeCertificate(cert_hash).transact(
                 {"from": self.w3.eth.default_account, "gas": 200000}
             )
