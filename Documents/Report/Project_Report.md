@@ -193,7 +193,7 @@ with legacy systems.
 ---
 
 ## CHAPTER-3 <br>EXISTING SYSTEM 
-# 3.1 Introduction 
+### 3.1 Introduction 
 Several digital credential management systems have been developed to enable 
 secure issuance and verification of certificates. Among them, Blockcerts, OpenCerts, 
 and DigiLocker are widely recognized models that demonstrate different approaches to 
@@ -221,7 +221,7 @@ repository for streamlined access and management. Together, these models highlig
 the evolution of credential management from manual and institution-dependent 
 processes to more secure, digital, and technology-driven solutions.
 
-# 3.2 Advantages 
+### 3.2 Advantages 
 1. Digital Accessibility, Certificates can be accessed, stored, and shared 
 electronically without physical handling. 
 2. Faster Verification, Digital systems reduce the time required to verify credentials 
@@ -233,7 +233,7 @@ and retrieve data efficiently.
 5. Easy Integration, Systems can be integrated with existing institutional or 
 government platforms for streamlined operations. 
 
-# 3.3 Disadvantages 
+### 3.3 Disadvantages 
 1. Centralized Dependency, Many systems rely on a single authority, creating a 
 potential single point of failure. 
 2. Limited Transparency, Verification processes may not always be openly visible 
@@ -248,7 +248,7 @@ systems to communicate seamlessly.
 ---
 
 ## CHAPTER-4 <br>PROPOSED SYSTEM 
-# 4.1 Introduction 
+### 4.1 Introduction 
 The proposed system, EduCredChain, is a hybrid Blockchain–PKI based 
 architecture designed to provide a secure, transparent, and reliable platform for 
 managing educational credentials. Traditional certificate management systems often 
@@ -277,7 +277,7 @@ enhances trust among institutions, employers, and users. Overall, EduCredChain
 provides a scalable, secure, and tamper-resistant solution for modern digital credential 
 management.
 
-# 4.2 Advantages  
+### 4.2 Advantages  
 1. Enhanced Security: Integration of cryptographic hashing and encryption ensures 
 protection against certificate tampering and unauthorized access. 
 2. Tamper Resistance: Storing certificate hashes on the blockchain ensures data 
@@ -293,7 +293,7 @@ and revocation processes.
 7. Scalability: The architecture can be extended to support multiple institutions 
 and credential types. 
 
-# 4.3 Limitations 
+### 4.3 Limitations 
 1. Implementation Complexity: Integrating blockchain, cryptography, and web 
 systems requires technical expertise. 
 2. Higher Initial Setup Cost: Blockchain network setup and maintenance may 
@@ -309,7 +309,7 @@ may require additional customization.
 
 ## CHAPTER-5 <br>SYSTEM REQUIREMENTS 
 
-# 5.1 Hardware Requirements 
+### 5.1 Hardware Requirements 
 The proposed system does not require specialized hardware and can be 
 implemented using standard computing resources. The hardware requirements include: 
 Processor: Intel Core i3 or higher 
@@ -318,7 +318,7 @@ Storage: Minimum 20 GB free disk space
 Network: Stable internet connection for blockchain communication 
 Display: Standard monitor with minimum 1366×768 resolution 
 
-# 5.2 Software Requirements 
+### 5.2 Software Requirements 
 The system is developed using modern programming and web technologies to 
 ensure security and efficiency. 
 Operating System: Windows / Linux / macOS 
@@ -330,7 +330,7 @@ Blockchain Platform: Local or test blockchain network
 Development Environment: VS Code / PyCharm 
 Web Browser: Google Chrome / Microsoft Edge / Firefox 
 
-# 5.3 Expected System Requirements 
+### 5.3 Expected System Requirements 
 The expected system requirements define the core functionalities and 
 operational behavior of the EduCredChain system. These requirements outline how 
 the system performs certificate issuance, verification, and secure data management 
@@ -386,7 +386,7 @@ Description: The system must log and track blockchain transactions related to
 certificate operations. 
 Input: Blockchain transaction details. 
 Output: Transaction status and logs for transparency and auditing. 
-# 5.4 Feasibility Study 
+### 5.4 Feasibility Study 
 A feasibility study evaluates whether the proposed system is practical and 
 beneficial for implementation. 
 1. Technical Feasibility 
@@ -415,7 +415,7 @@ timeframe using available technologies. Since the system components such as web
 interfaces, database management, and cryptographic libraries are readily available, the 
 project can be implemented within the planned academic project schedule.
 
-# 5.5 Work Plan  
+### 5.5 Work Plan  
 The development of the EduCredChain: A Hybrid Blockchain–PKI Architecture 
 for Educational Credential Verification was planned and executed in a systematic 
 manner. The project was divided into several phases to ensure smooth progress and 
@@ -461,7 +461,7 @@ Duration: 1 Week
 ---
 
 ## CHAPTER-6 <br>SYSTEM MODEL 
-# 6.1 ARCHITECTURE DESIGN 
+### 6.1 ARCHITECTURE DESIGN 
 Architecture Design refers to the high-level structure of a software system, 
 defining its components, modules, and their interactions. The architecture of 
 EduCredChain follows a hybrid model integrating a web-based user interface, backend 
@@ -472,25 +472,25 @@ and its cryptographic hash is recorded on the blockchain to ensure immutability 
 integrity. This layered architecture enables secure communication between components 
 and provides a reliable, tamper-resistant credential management system.
 
-# 6.2 USE CASE DIAGRAM 
+### 6.2 USE CASE DIAGRAM 
 A Use Case Diagram is a visual representation of the interactions between users 
 (actors) and the system. It shows the functional requirements of the system by depicting 
 the various use cases (functions) that users can perform and how they interact with 
 different components. 
 
-# 6.3 SEQUENCE DIAGRAM 
+### 6.3 SEQUENCE DIAGRAM 
 The sequence diagram shows interactions between the user, backend, database, 
 and blockchain. The system processes certificate data, generates a hash, and stores it 
 securely while recording the hash on the blockchain. During verification, the hash is 
 recalculated and compared with the blockchain record to confirm authenticity.
 
-# 6.4 ACTIVITY DIAGRAM 
+### 6.4 ACTIVITY DIAGRAM 
 An Activity Diagram is a flowchart that models the workflow of a system or 
 process. It shows the sequence of activities, decisions, and parallel processes, helping 
 to visualize the logic of complex operations and the flow of control from one activity to 
 another. 
 
-# 6.5 ENTITY-RELATIONSHIP DIAGRAM 
+### 6.5 ENTITY-RELATIONSHIP DIAGRAM 
 The ER diagram of the EduCredChain system represents the relationships 
 between key entities such as certificates, users (issuers/verifiers), and blockchain 
 records. It illustrates how certificate details are stored in the database along with 
@@ -509,7 +509,7 @@ ensure secure and efficient certificate management. This chapter describes the k
 components of the implementation, including the certificate processing module, secure 
 data storage, and blockchain-based verification and revocation mechanisms. 
 
-# 7.1 Blockchain Infrastructure Module 
+### 7.1 Blockchain Infrastructure Module 
 7.1.1 Core Blockchain Framework 
 The Blockchain Infrastructure Module acts as the core foundation, 
 enabling 
@@ -537,7 +537,7 @@ storage of certificate hashes. It enables real-time verification of credentials 
 blockchain records. The system remains reliable, scalable, and resistant to fraud 
 due to its decentralized design. 
 
-# 7.2 Certificate Hash Generation 
+### 7.2 Certificate Hash Generation 
 7.2.1 Input Normalization 
 Certificate fields are preprocessed by converting text values to lowercase 
 and removing unnecessary spaces. The name, Course ID, and certificate number 
@@ -558,7 +558,7 @@ d = Issue Date
 g = Grade 
 || = Concatenation operator 
 
-# 7.3 Data Storage Architecture 
+### 7.3 Data Storage Architecture 
 7.3.1 Hybrid Storage Model 
 The system uses a hybrid architecture dividing data between off-chain and on
 chain storage. This approach ensures efficiency, scalability, and security in 
@@ -703,7 +703,7 @@ IEEE Transactions on Network Science and Engineering 8.2 (2021): 1698-1710.
 
 ## APPENDIX – I 
 
-# A.1.1 Python code to Connect to Blockchain Network 
+### A.1.1 Python code to Connect to Blockchain Network 
 The Python code establishes a connection to the blockchain network (Ethereum via 
 Ganache) using Web3 to enable interaction with smart contracts and transaction 
 processing.
@@ -728,7 +728,7 @@ print("Active Account:", self.w3.eth.default_account)
 return self.w3
 ```
 
-# A.1.2 Certificate Issue  
+### A.1.2 Certificate Issue  
  
 The Python code handles certificate issuance by processing input data, generating a 
 SHA-256 hash, storing certificate details in the database, and recording the hash on the 
@@ -772,7 +772,7 @@ grade,cert_hash.hex()])
 
 ```
 
-# A.1.3 Certificate Verification 
+### A.1.3 Certificate Verification 
  
 The Python code performs certificate verification by retrieving stored data, regenerating 
 the hash, and comparing it with the blockchain record to validate authenticity. 
@@ -814,7 +814,7 @@ self.contract.functions.verifyCertificate(
             ).call() 
 ```
 
-# A.1.4 Certificate Revocation 
+### A.1.4 Certificate Revocation 
  
 The Python code handles certificate revocation by updating the certificate status in the 
 database and recording the revocation on the blockchain to prevent further use. 
@@ -857,7 +857,7 @@ def revoke_certificate(self, data):
 
 ```
 
-# A.1.5 Database Operations 
+### A.1.5 Database Operations 
  
 The Python code performs database operations by inserting certificate data into the 
 database and retrieving records for verification and management processes. 
@@ -892,7 +892,7 @@ def select_record(self, cert_no):
         return None
 ```
 
-# A.1.6 RSA Encryption & Decryption 
+### A.1.6 RSA Encryption & Decryption 
  
 The Python code implements RSA encryption and decryption to securely protect 
 certificate data and ensure that only authorized parties can access or read the information. 
@@ -939,7 +939,7 @@ def rsa_decrypt(self,data):
 ---
 
 ## APPENDIX – II 
-# A.II.1 Ganache Local Blockchain Setup Screenshot 
+### A.II.1 Ganache Local Blockchain Setup Screenshot 
 The Ganache Local Blockchain Setup Screenshot displays the simulated Ethereum 
 environment used for testing the EduCredChain system. It shows multiple generated 
 accounts along with their respective addresses, private keys, and available balances. The 
@@ -947,7 +947,7 @@ interface also presents details of transactions, blocks, and gas usage, providin
 view of blockchain activity. This setup enables a controlled environment for deploying 
 smart contracts and recording certificate hashes without using a live network. 
 
-# A.II.2 SQLite Database Structure (certificates.db) 
+### A.II.2 SQLite Database Structure (certificates.db) 
  
 The screenshot displays the structure of the certificates.db SQLite database used in the 
 EduCredChain system. It shows the records table where only the certificate ID is visible 
@@ -956,7 +956,7 @@ hash are stored in encrypted format. This ensures confidentiality and protects s
 certificate data from unauthorized access. The database functions as the off-chain 
 storage layer, supporting secure storage and retrieval during certificate operations. 
 
-# A.II.3 Flask Backend Execution and Server Logs 
+### A.II.3 Flask Backend Execution and Server Logs 
 The screenshot displays the Flask backend server running the EduCredChain 
 application along with real-time execution logs. It shows the server initialization, API 
 request handling, and responses generated during certificate operations such as issuance, 
