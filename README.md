@@ -36,22 +36,19 @@ The system architecture consists of the following modules:
 * Database Storage
 * Blockchain Network
 
-
-### Architecture Diagram
-
-
 ```
-[ Web Interface ]
-        │
-        ▼
-[ Backend Server / API ]
-        │
-        ├── Cryptographic Module (RSA + SHA256)
-        │
-        ├── SQLite Database
-        │
-        ▼
-[ Blockchain Network ]
+                [ Web Interface ]
+                        │
+                        ▼
+           [ Backend Server / API ]
+                        │
+                        ├── Cryptographic Module (RSA + SHA256)
+                        │
+                        ├── SQLite Database
+                        │
+        ├──────────────────────────────────|
+        ▼                                  ▼
+[ Blockchain Network ]           [ Database Storage]
 ```
 
 ---
