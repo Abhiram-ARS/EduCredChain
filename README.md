@@ -2,7 +2,7 @@
 
 ---
 
-# 📕 Project Overview
+## 📕 Project Overview
 
 EduCredChain is a secure and tamper-resistant educational credential verification system that integrates **Blockchain technology with Public Key Infrastructure (PKI)** to prevent certificate forgery and enable reliable verification.
 
@@ -12,7 +12,7 @@ The system enables institutions to issue certificates digitally and allows third
 
 ---
 
-# ⚙️ Technology Stack
+## ⚙️ Technology Stack
 
 | Component            | Technology                         |
 | -------------------- | ---------------------------------- |
@@ -26,7 +26,7 @@ The system enables institutions to issue certificates digitally and allows third
 
 ---
 
-# System Architecture
+## System Architecture
 
 The system architecture consists of the following modules:
 
@@ -37,7 +37,7 @@ The system architecture consists of the following modules:
 * Blockchain Network
 
 
-## Architecture Diagram
+### Architecture Diagram
 
 ![Architecture_Diagram](https://github.com/Abhiram-ARS/EduCredChain/blob/7b91ef3dd5d7f87f39e7ad49a8cfe97778278f58/Documents/Diagrams/architecture_diagram.png)
 
@@ -57,7 +57,7 @@ The system architecture consists of the following modules:
 
 ---
 
-# Module Description
+## Module Description
 
 - Web Interface, Provides user interaction for certificate issuance and verification through a browser-based interface.
 - Backend Server, Handles request processing, data validation, cryptographic operations, and communication with the database and blockchain.
@@ -66,7 +66,7 @@ The system architecture consists of the following modules:
 - Blockchain Network, Stores certificate hashes to ensure **immutability and tamper resistance**.
 
 
-# Project Structure
+## Project Structure
 
 ```
 EduCredChain
@@ -95,7 +95,7 @@ code
 
 ---
 
-# Security Mechanisms
+## Security Mechanisms
 
 * **SHA-256 hashing** ensures certificate data integrity.
 * **RSA encryption** protects sensitive credential information.
@@ -104,14 +104,14 @@ code
 
 ---
 
-# Authors 
+## Authors 
 🧑‍💻**Abhiram S**,BTech Student
 
 🧑‍💻**Amarnath Mohan**,BTech Student
 
 🧑‍💻**Mohammed Yaseen**,BTech Student
 
-# License
+## License
 
 Project is licensed under MIT license
 ### 👉 [License](https://github.com/Abhiram-ARS/EduCredChain/blob/8077076a761129c5b68ca0b1da8ad9ec876ada0b/LICENSE)
