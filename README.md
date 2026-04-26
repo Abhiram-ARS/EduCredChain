@@ -39,7 +39,6 @@ The system architecture consists of the following modules:
 
 ### Architecture Diagram
 
-![Architecture_Diagram](https://github.com/Abhiram-ARS/EduCredChain/blob/7b91ef3dd5d7f87f39e7ad49a8cfe97778278f58/Documents/Diagrams/architecture_diagram.png)
 
 ```
 [ Web Interface ]
