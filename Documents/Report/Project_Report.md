@@ -798,23 +798,23 @@ Ganache) using Web3 to enable interaction with smart contracts and transaction
 processing.
 ```
 def __init__(self): 
-ganache_url = "http://127.0.0.1:7545" 
-self.CONTRACT_FILE = "Certificate.sol" 
-self.SOLC_VERSION = "0.8.17" 
-self.w3 = Web3(Web3.HTTPProvider(ganache_url)) 
-self.abi, self.bytecode = self.compile_contract() 
-self.w3 = self.connect_blockchain() 
-self.contract = self.deploy_or_load_contract() 
-self.sqlecc = SQL_ECC.Sql_db() 
-def connect_blockchain(self): 
-if not self.w3.is_connected(): 
-print("Ganache not connected.") 
-sys.exit() 
-self.w3.eth.default_account = self.w3.eth.accounts[0] 
-print("Connected to Blockchain") 
-print("Chain ID:", self.w3.eth.chain_id) 
-print("Active Account:", self.w3.eth.default_account) 
-return self.w3
+    ganache_url = "http://127.0.0.1:7545" 
+    self.CONTRACT_FILE = "Certificate.sol" 
+    self.SOLC_VERSION = "0.8.17" 
+    self.w3 = Web3(Web3.HTTPProvider(ganache_url)) 
+    self.abi, self.bytecode = self.compile_contract() 
+    self.w3 = self.connect_blockchain() 
+    self.contract = self.deploy_or_load_contract() 
+    self.sqlecc = SQL_ECC.Sql_db() 
+    def connect_blockchain(self): 
+    if not self.w3.is_connected(): 
+        print("Ganache not connected.") 
+    sys.exit() 
+    self.w3.eth.default_account = self.w3.eth.accounts[0] 
+    print("Connected to Blockchain") 
+    print("Chain ID:", self.w3.eth.chain_id) 
+    print("Active Account:", self.w3.eth.default_account) 
+    return self.w3
 ```
 
 ### A.1.2 Certificate Issue  
@@ -838,9 +838,7 @@ def issue_certificate(self,data):
             name, course_id, certificate_no, issue_date, grade 
         ) 
          
-        self.sqlecc.add_record([certificate_no,name, course_id, issue_date,  
-                                                                                                         
-grade,cert_hash.hex()]) 
+        self.sqlecc.add_record([certificate_no,name, course_id, issue_date, grade,cert_hash.hex()]) 
  
         try: 
             tx_hash = self.contract.functions.issueCertificate(cert_hash).transact( 
@@ -869,8 +867,7 @@ the hash, and comparing it with the blockchain record to validate authenticity.
 def verify_certificate(self, data): 
  
         print(data) 
-        row = 
-[data['studentName'],data['course'],data['certid'],data['date'],data['grade']] 
+        row = [data['studentName'],data['course'],data['certid'],data['date'],data['grade']] 
          
         # Recompute hash  
         recalculated_hash = self.generate_certificate_hash( 
@@ -897,8 +894,7 @@ def verify_certificate(self, data):
                    "Message": "DB_Decryption_Error"} 
  
         try: 
-            exists, revoked, issued_at, revoked_at = 
-self.contract.functions.verifyCertificate( 
+            exists, revoked, issued_at, revoked_at = self.contract.functions.verifyCertificate( 
                 cert_hash 
             ).call() 
 ```
@@ -965,9 +961,7 @@ def add_record(self, data):
         self.conn.commit() 
  
 def select_record(self, cert_no): 
-        self.cursor.execute("SELECT * FROM records WHERE Certificate_No = ?", 
-                          
-(cert_no,)) 
+        self.cursor.execute("SELECT * FROM records WHERE Certificate_No = ?", (cert_no,)) 
         row = self.cursor.fetchone() 
         if row:            
             cert_no, name, course_id, issue_date, grade, hash_val = row 
