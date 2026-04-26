@@ -471,6 +471,7 @@ processing, hashing, and encryption. Certificate data is securely stored in the 
 and its cryptographic hash is recorded on the blockchain to ensure immutability and 
 integrity. This layered architecture enables secure communication between components 
 and provides a reliable, tamper-resistant credential management system.
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Diagrams/Architecture_Diagram.jpg)
 
 ### 6.2 USE CASE DIAGRAM 
@@ -478,6 +479,7 @@ A Use Case Diagram is a visual representation of the interactions between users
 (actors) and the system. It shows the functional requirements of the system by depicting 
 the various use cases (functions) that users can perform and how they interact with 
 different components. 
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Diagrams/UseCase_Diagram.jpg)
 
 ### 6.3 SEQUENCE DIAGRAM 
@@ -485,6 +487,7 @@ The sequence diagram shows interactions between the user, backend, database,
 and blockchain. The system processes certificate data, generates a hash, and stores it 
 securely while recording the hash on the blockchain. During verification, the hash is 
 recalculated and compared with the blockchain record to confirm authenticity.
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Diagrams/Sequence_Diagram.jpg)
 
 ### 6.4 ACTIVITY DIAGRAM 
@@ -492,6 +495,7 @@ An Activity Diagram is a flowchart that models the workflow of a system or
 process. It shows the sequence of activities, decisions, and parallel processes, helping 
 to visualize the logic of complex operations and the flow of control from one activity to 
 another. 
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Diagrams/flowchart_1.png)
 
 ### 6.5 ENTITY-RELATIONSHIP DIAGRAM 
@@ -503,6 +507,7 @@ The diagram also shows the linkage between certificate records and their corresp
 hash values stored on the blockchain. This structured representation helps in 
 understanding data organization, relationships, and efficient management of certificate 
 information within the system.
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Diagrams/ER_Diagram.jpg)
 
 ---
@@ -596,6 +601,7 @@ adoption.
 ## CHAPTER-8 <br>RESULT & DISCUSSION 
 
 ### 8.1 Index Page
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/1_IndexPage.jpg)
 illustrates the index page of the EduCredChain system, which serves 
 as the main interface for users to access different functionalities. It provides navigation 
@@ -604,6 +610,7 @@ to be simple and user-friendly, allowing users to interact with the system effic
 This page acts as the entry point for all certificate management operations. 
 
 ### 8.2 Certificate Issue Page 
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/2_CertificateIssue.jpg)
 Illustrates the certificate issuance interface where authorized users 
 input essential certificate details such as name, course ID, certificate number, issue date, 
@@ -617,6 +624,7 @@ and tamper-resistant process for issuing digital certificates while maintaining 
 integrity and transparency.
 
 ### 8.3 Certificate Verification Page
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/3_CertifiacateVerification.jpg)
 Illustrates the certificate verification interface that allows users to 
 validate the authenticity of a certificate using its unique identifier. When a request is 
@@ -639,6 +647,7 @@ revoked certificates. This mechanism strengthens the overall integrity and
 trustworthiness of the credential management system.
 
 ### 8.5 Retrieving Tampered Data from Database
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/5_TamperedDB.jpg)
 Illustrates the process of retrieving tampered certificate data from the 
 database to demonstrate the system’s integrity validation mechanism. When certificate 
@@ -649,6 +658,7 @@ altered or compromised. This process highlights the system’s ability to identi
 tampering and effectively prevent fraudulent use of modified certificates.
 
 ### 8.6 Checking an invalid Certificate
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/6_BlockNotFound.jpg)
 Illustrates the validation of an invalid certificate within the system, 
 where a certificate that does not correspond to any stored or recognized record is 
@@ -659,6 +669,7 @@ legitimate and registered certificates are accepted. It enhances the reliability
 robustness of the verification mechanism by preventing unauthorized or fake credentials.
 
 ### 8.7 Checking a Revoked Certificate
+
 ![GitHub Logo](https://github.com/Abhiram-ARS/EduCredChain/blob/main/Documents/Output/7_RevokedCertVerify.jpg)
 Illustrates the verification of a revoked certificate in the system, where 
 a certificate with valid data is checked against its current status. During the verification 
