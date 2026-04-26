@@ -44,8 +44,6 @@ The system architecture consists of the following modules:
                         │
                         ├── Cryptographic Module (RSA + SHA256)
                         │
-                        ├── SQLite Database
-                        │
         ├──────────────────────────────────|
         ▼                                  ▼
 [ Blockchain Network ]           [ Database Storage]
