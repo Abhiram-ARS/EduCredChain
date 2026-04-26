@@ -26,37 +26,6 @@ The system enables institutions to issue certificates digitally and allows third
 
 ---
 
-# ✏️ System Flow
-
-The system operates through two main processes: **Certificate Issuance** and **Certificate Verification**.
-
-![Flowchart](https://github.com/Abhiram-ARS/EduCredChain/blob/3e75aafd0d19c7cba48baea4d8f085a578bd377f/Documents/Diagrams/flowchart.png)
-
-## 1️⃣ Certificate Issuance
-
-1. The issuer enters certificate details through the web interface.
-2. The certificate data is sent to the backend server.
-3. The backend generates a **SHA-256 hash** of the certificate data.
-4. Certificate data (excluding certificate ID and date) is **encrypted using the issuer's private key**.
-5. The encrypted data and hash are stored in the **SQLite database**.
-6. The generated hash is added to the **blockchain network**.
-7. The system confirms successful certificate issuance.
-
-
-## 2️⃣ Certificate Verification
-
-1. The user enters the **Certificate ID** on the verification portal.
-2. The backend retrieves the encrypted certificate data from the database.
-3. The corresponding hash is fetched from the blockchain.
-4. The certificate data is **decrypted using the public key**.
-5. A new SHA-256 hash is generated from the decrypted data.
-6. The newly generated hash is compared with the blockchain hash.
-
-**Matching hashes → Certificate is valid**
-**Non-matching hashes → Certificate has been tampered**
-
----
-
 # System Architecture
 
 The system architecture consists of the following modules:
@@ -108,7 +77,7 @@ code
 │   ├── API_ECC.py
 │   ├── BlkChain_ECC.py
 │   ├── Certificate.sol
-│   ├── SQL_ECC.py
+│   └── SQL_ECC.py
 │   
 ├──Database_Bypass_Application
 │       ├── dbBypass.py
@@ -132,16 +101,6 @@ code
 * **RSA encryption** protects sensitive credential information.
 * **Blockchain storage** prevents modification of certificate records.
 * **Digital signatures** verify the authenticity of the issuing authority.
-
----
-
-# Future Improvements
-
-* Smart contract based certificate management
-* Multi-institution blockchain network
-* QR code based certificate verification
-* IPFS integration for decentralized storage
-* Mobile verification application
 
 ---
 
